@@ -103,30 +103,31 @@
                     $.ajax({
                         url: '<?php echo site_url('ciudad_controller/get_city'); ?>',
                         type: 'GET',
-                        data: { name: cityName },
-                        dataType: 'json',
-                        success: function(response) {
-                            if (response) {
-                                const content = `
-                                    <tr>
-                                        <th class="w-25">Departamento</th>
-                                        <td>${response.codigo_departamento}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <td>${response.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Código Principal</th>
-                                        <td>${response.main_code}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Código Adicional</th>
-                                        <td>${response.additional_code}</td>
-                                    </tr>
-                                `;
-                                $('#infoContent').html(content);
-                            } else {
+                        
+                    dataType: 'json',
+                    data: { name: cityName },
+                    success: function(response) {
+                        if (response.status === 'success') {
+        const data = response.data;
+        $('#infoContent').html(`
+            <tr>
+                <th>Departamento:</th>
+                <td>${data.departamento}</td>
+            </tr>
+            <tr>
+                <th>Nombre:</th>
+                <td>${data.nombre}</td>
+            </tr>
+            <tr>
+                <th>Código Principal:</th>
+                <td>${data.codigo_principal}</td>
+            </tr>
+            <tr>
+                <th>Código Adicional:</th>
+                <td>${data.codigo_adicional}</td>
+            </tr>
+        `);
+    } else {
                                 $('#infoContent').html('<tr><td colspan="2">Ciudad no encontrada</td></tr>');
                             }
                         },
